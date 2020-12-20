@@ -1,0 +1,18 @@
+<div class="signup">
+    <h1 class="signup-heading">Sign up</h1>
+
+    <form action="#" class="signup-form" autocomplete="off" [formGroup]="myForm">
+      <label for="fullname" class="signup-label">Email</label>
+      <input #emailinput type="text" id="fullname" class="signup-input" placeholder="enter email" formControlName="email">
+      <span *ngIf="isValid('email')">entered email is invalid</span> <br>
+      <label for="email" class="signup-label">Password</label>
+      <input #pwinput type="email" id="email" class="signup-input" placeholder="enter password" formControlName="password">
+      <span *ngIf="isValid('password')">password is require</span> <br>
+      <button class="signup-submit" (click)="onSignupButtonClicked(emailinput.value,pwinput.value)">Sign up</button>
+    
+    </form>
+    <p class="signup-already">
+      <span>Already have an account ?</span>
+      <a href="#" class="signup-login-link">Login</a>
+    </p>
+  </div>
