@@ -28,6 +28,7 @@ app.get('/list',verifyToken,(req,res) =>{
         _userId: req.user_id
     }).then((lists) => {
         res.send(lists);
+        
     }).catch((e) => {
         res.send(e);
     });
@@ -44,12 +45,14 @@ app.post('/list',verifyToken,(req,res) => {
     });
     newList.save().then((listDoc) => {
         // the full list document is returned (incl. id)
+        console.log(listDoc)
         res.send(listDoc);
     })
 });
 
 // update list
 app.patch('/list/:id',verifyToken,(req,res) =>{
+    console.log(req.body)
     List.findOneAndUpdate({ _id: req.params.id,_userId: req.user_id}, {
         $set: req.body
     }).then(() => {
@@ -64,6 +67,11 @@ app.delete('/list/:id',verifyToken,(req,res) => {
         _id: req.params.id,
         _userId: req.user_id
     }).then((removedListDoc) => {
+        Task.deleteMany({
+            _listId: req.params.id
+        }, (err) => {
+            console.log(err)
+        })
         res.send(removedListDoc);
     })
 });
@@ -84,6 +92,7 @@ app.post('/list/:listId/task',verifyToken,(req,res) =>{
         _id: req.params.listId,
         _userId: req.user_id
     }).then((list) => {
+        console.log(list)
         if (list) {
             // list object with the specified conditions was found
             // therefore the currently authenticated user can create new tasks
@@ -94,10 +103,12 @@ app.post('/list/:listId/task',verifyToken,(req,res) =>{
         return false;
     }).then((canCreateTask) => {
         if (canCreateTask) {
+            
             let newTask = new Task({
                 title: req.body.title,
                 _listId: req.params.listId
             });
+            
             newTask.save().then((newTaskDoc) => {
                 res.send(newTaskDoc);
             })
@@ -109,10 +120,15 @@ app.post('/list/:listId/task',verifyToken,(req,res) =>{
 
 //update task
 app.patch('/list/:listId/task/:taskId',verifyToken,(req,res) =>{
+    console.log(req.params.taskId)
+    console.log(req.params.listId)
+    console.log(req.body)
+    
     List.findOne({
         _id: req.params.listId,
         _userId: req.user_id
     }).then((list) => {
+        console.log(list)
         if (list) {
            
             return true;
@@ -123,6 +139,7 @@ app.patch('/list/:listId/task/:taskId',verifyToken,(req,res) =>{
     }).then((canUpdateTasks) => {
         if (canUpdateTasks) {
             // the currently authenticated user can update tasks
+            
             Task.findOneAndUpdate({
                 _id: req.params.taskId,
                 _listId: req.params.listId
@@ -140,10 +157,14 @@ app.patch('/list/:listId/task/:taskId',verifyToken,(req,res) =>{
 
 // delete task 
 app.delete('/list/:listId/task/:taskId',(req,res)=>{
+    // console.log(req)
+    console.log(req.params.listId)
+    console.log(req.user_id)
     List.findOne({
-        _id: req.params.listId,
-        _userId: req.user_id
+        _id: req.params.listId
+        
     }).then((list) => {
+        console.log(list)
         if (list) {
             // list object with the specified conditions was found
             // therefore the currently authenticated user can make updates to tasks within this list
@@ -153,7 +174,7 @@ app.delete('/list/:listId/task/:taskId',(req,res)=>{
         // else - the list object is undefined
         return false;
     }).then((canDeleteTasks) => {
-        
+        console.log(canDeleteTasks)
         if (canDeleteTasks) {
             Task.findOneAndRemove({
                 _id: req.params.taskId,

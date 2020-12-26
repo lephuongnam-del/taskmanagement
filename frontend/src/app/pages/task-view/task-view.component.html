@@ -1,3 +1,6 @@
+
+<button color="primary" class="button is-primary has-text-white" id="logout-btn" (click)="onLogoutButtonClick()">Logout</button>
+
 <div class="centered-content">
     <div class="task-manager-container">
         <div class="sidebar has-background-white">
@@ -5,14 +8,14 @@
               Lists
             </h1>    
             <div class="list-menu">
-                <a class="list-menu-item" >
-                  <p>List</p>
-                </a>
-                <a class="list-menu-item" *ngFor="let list of list" [routerLink]="['/list',list._id]" routerLinkActive="is-active">
-                  <p>{{list.title}}</p>
-                </a>
-        
-              </div>
+                <div class="list-menu-item" *ngFor="let listItem of list;">
+                  <a  [routerLink]="['/list',listItem._id]" routerLinkActive="is-active">
+                    <span> {{listItem.title}}</span>
+                  </a>
+                  <button color="primary" class="button is-primary has-text-white" class="update-btn" (click)="updateList(listItem._id)">U</button>
+                  <button color="primary" class="button is-primary has-text-white" class="delete-btn" (click)="deleteList(listItem._id)">D</button>
+                </div>
+            </div>
              
               <button class="button is-primary has-text-white" routerLink="/new-list" >+ New List</button>
           </div>
@@ -26,6 +29,8 @@
 
               <div class="task" *ngFor="let task of task"  >
                     <p>{{task.title}}</p>
+                    <button color="primary" class="button is-primary has-text-white" class="update-btn" (click)="updateTask(task._id)">U</button>
+                    <button color="primary" class="button is-primary has-text-white" class="delete-btn" (click)="deleteTask(task._id, task._listId)">D</button>
               </div>
               <h3 class="empty-state-text" *ngIf="task.length === 0">There are no tasks here! Click the add button to create
                 a new task.</h3>
