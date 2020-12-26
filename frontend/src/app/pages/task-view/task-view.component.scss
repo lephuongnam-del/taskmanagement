@@ -1,6 +1,5 @@
 @import'../../../main-style.scss';
 
-
 .task-manager-container {
     display: flex;
     width: 100%;
@@ -110,4 +109,22 @@
     font-size: 20px;
     color: #777;
     text-align: center;
+}
+
+#logout-btn {
+    float: right;
+    background-color: red;
+}
+
+.update-btn {
+    position: relative;
+    right: 0px;
+    background-color: green;
+}
+
+.delete-btn {
+    margin-right: auto;
+    display: block;
+
+    background-color: red;
 }

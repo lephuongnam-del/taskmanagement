@@ -4,28 +4,28 @@ import { TaskService} from '../../task.service';
 import { Task } from '../../models/task.model';
 @Component({
   selector: 'app-new-task',
-  templateUrl: './new-task.component.html',
-  styleUrls: ['./new-task.component.scss']
+  templateUrl: './update-task.component.html',
+  styleUrls: ['./update-task.component.scss']
 })
-export class NewTaskComponent implements OnInit {
+export class UpdateTaskComponent implements OnInit {
 
   constructor(private taskService : TaskService, private route: ActivatedRoute,private router: Router ) { }
 
     listId : string;
+    taskId : string;
   ngOnInit(): void {
     this.route.params.subscribe(
       (params: Params) => {
         this.listId = params['listId'];
+        this.taskId = params['taskId'];
       }
     )
   }
-  createTask(title:string){
+  updateTask(title:string){
     // alert("new task adding")
-    this.taskService.createTask(title, this.listId).subscribe((newTask: Task) => {
-       this.router.navigate(['../'], { relativeTo: this.route });
+    this.taskService.updateTask(title, this.taskId, this.listId).subscribe(() => {
+       this.router.navigate(['/list/' +this.listId]);
       
     })
   }
-  
-
 }
