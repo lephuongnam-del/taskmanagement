@@ -19,6 +19,10 @@ export class UpdateListComponent implements OnInit {
     )
   }
 
+  cancelClick () {
+    this.router.navigate(['/list'])
+  }
+
   updateList(title :string) {
     this.taskService.updateList(this.listId,title).subscribe((list: List) => {
       console.log(list);
