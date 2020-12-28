@@ -5,12 +5,12 @@
       <label for="fullname" class="signup-label">Email</label>
       <input #emailinput type="text" id="fullname" class="signup-input" placeholder="enter email" >
       <label for="email" class="signup-label">Password</label>
-      <input #pwinput type="email" id="email" class="signup-input" placeholder="enter password" >
+      <input #pwinput type="password" id="email" class="signup-input" placeholder="enter password" >
       <button class="signup-submit" (click)="onLoginButtonClicked(emailinput.value, pwinput.value)">Sign In</button>
     
     </form>
     <p class="signup-already">
       <span>Do you have an account ?</span>
-      <a href="#" class="signup-login-link">Sign up</a>
+      <a href="/register" class="signup-login-link">Sign up</a>
     </p>
   </div>

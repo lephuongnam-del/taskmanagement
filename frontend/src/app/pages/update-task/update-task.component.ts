@@ -21,6 +21,9 @@ export class UpdateTaskComponent implements OnInit {
       }
     )
   }
+  cancelClick () {
+    this.router.navigate(['/list/' +this.listId]);
+  }
   updateTask(title:string){
     // alert("new task adding")
     this.taskService.updateTask(title, this.taskId, this.listId).subscribe(() => {
