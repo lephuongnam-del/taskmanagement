@@ -213,21 +213,34 @@ function verifyToken(req,res,next)
 
 // register user
 app.post('/register', (req,res)=>{
-    var user = new User({
-        email: req.body.email,
-        password: req.body.password
-       
-      });
+    console.log (req.body.email)
+    User.find({
+        email: req.body.email
+        
+    }).then((UserItem) => {
+        console.log(UserItem.length)
+        if (UserItem.length != 0){
+            console.log("user found")
+            return res.json({message : 'Email already registered'})
+        }
+        console.log(req.body.email)
+        var user = new User({
+            email: req.body.email,
+            password: req.body.password
+               
+        });
+        console.log("user not found")    
+        let promise = user.save();
+            
+        promise.then(function(doc){
+            return res.status(201).json(doc);
+        })
+            
+        promise.catch(function(err){
+            return res.status(501).json({message: 'Error registering user.'})
+        })
+    });
     
-      let promise = user.save();
-    
-      promise.then(function(doc){
-        return res.status(201).json(doc);
-      })
-    
-      promise.catch(function(err){
-        return res.status(501).json({message: 'Error registering user.'})
-      })
 })
 //get user
 app.get('/register',function(req,res)
