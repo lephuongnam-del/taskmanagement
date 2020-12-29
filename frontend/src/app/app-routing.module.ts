@@ -7,6 +7,13 @@ import {RegisterComponent} from './pages/register/register.component'
 import {LoginComponent} from './pages/login/login.component'
 import {UpdateTaskComponent} from './pages/update-task/update-task.component'
 import {UpdateListComponent} from './pages/update-list/update-list.component'
+import { SocialLoginModule } from 'angularx-social-login';
+import { SocialAuthServiceConfig, SocialAuthService } from 'angularx-social-login';
+import {
+  GoogleLoginProvider,
+  FacebookLoginProvider
+} from 'angularx-social-login';
+
 const routes: Routes = [
   {path:'',redirectTo:'/list',pathMatch:'full'},
   {path:'new-list',component:NewListComponent},
@@ -20,7 +27,21 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes), SocialLoginModule],
+  exports: [RouterModule],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('408808110384473')
+          }
+        ]
+      } as SocialAuthServiceConfig,
+    }
+  ]
 })
 export class AppRoutingModule { }
