@@ -7,6 +7,7 @@
       <label for="email" class="signup-label">Password</label>
       <input #pwinput type="password" id="email" class="signup-input" placeholder="enter password" >
       <button class="signup-submit" (click)="onLoginButtonClicked(emailinput.value, pwinput.value)">Sign In</button>
+      <button class="signup-submit" #GoogleLogin>Sign In with Google</button>
     
     </form>
     <p class="signup-already">
