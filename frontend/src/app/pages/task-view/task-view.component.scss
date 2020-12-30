@@ -91,6 +91,12 @@
         opacity: 0.8;
     }
 
+    .task-buttons {
+        transition: opacity 0.2s, transform 0.2s;
+        opacity: 0;
+        transform: scale(0.85);
+    }
+
 }
 
 .add-cirle-button {
@@ -115,16 +121,15 @@
     float: right;
     background-color: red;
 }
-
-.update-btn {
-    position: relative;
-    right: 0px;
-    background-color: green;
+.btnfixlist{
+    position: fixed;
+    margin-left: 40px;
 }
-
-.delete-btn {
-    margin-right: auto;
-    display: block;
-
-    background-color: red;
+.btnfixlist .delete-btn{
+    margin-left: 1px;
+   
+}
+.btnfixtask{
+    
+    margin-left: 400px;
 }

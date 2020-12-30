@@ -6,14 +6,24 @@
         <div class="sidebar has-background-white">
             <h1 class="title has-text-primary">
               Lists
-            </h1>    
+            </h1>  
+              
             <div class="list-menu">
                 <div class="list-menu-item" *ngFor="let listItem of list;">
                   <a  [routerLink]="['/list',listItem._id]" routerLinkActive="is-active">
                     <span> {{listItem.title}}</span>
                   </a>
-                  <button color="primary" class="button is-primary has-text-white" class="update-btn" (click)="updateList(listItem._id)">U</button>
-                  <button color="primary" class="button is-primary has-text-white" class="delete-btn" (click)="deleteList(listItem._id)">D</button>
+                  <div class="lists-buttons">
+
+                    <button class="button is-small" (click)="updateList(listItem._id)" >U</button>
+        
+                    <button class="button is-danger is-small" style="margin-left: 10px;" (click)="deleteList(listItem._id)">
+                      D
+                    </button>
+        
+                  </div>
+                 
+                 
                 </div>
             </div>
              
@@ -29,8 +39,15 @@
 
               <div class="task" *ngFor="let task of task"  >
                     <p>{{task.title}}</p>
-                    <button color="primary" class="button is-primary has-text-white" class="update-btn" (click)="updateTask(task._id)">U</button>
-                    <button color="primary" class="button is-primary has-text-white" class="delete-btn" (click)="deleteTask(task._id, task._listId)">D</button>
+          
+                  
+                    <div class="btnfixtask">
+                      <button class="button is-small" (click)="updateTask(task._id)" >U</button>
+                      <button class="button is-danger is-small" style="margin-left: 10px;" (click)="deleteTask(task._id, task._listId)">
+                        D
+                      </button>
+                    </div>
+                  
               </div>
               <h3 class="empty-state-text" *ngIf="task.length === 0">There are no tasks here! Click the add button to create
                 a new task.</h3>
