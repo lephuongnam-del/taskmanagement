@@ -1,64 +1,83 @@
 
-<button color="primary" class="button is-primary has-text-white" id="logout-btn" (click)="onLogoutButtonClick()">Logout</button>
-
 <div class="centered-content">
-    <div class="task-manager-container">
-        <div class="sidebar has-background-white">
-            <h1 class="title has-text-primary">
-              Lists
-            </h1>  
-              
-            <div class="list-menu">
-                <div class="list-menu-item" *ngFor="let listItem of list;">
-                  <a  [routerLink]="['/list',listItem._id]" routerLinkActive="is-active">
-                    <span> {{listItem.title}}</span>
-                  </a>
-                  <div class="lists-buttons">
+  <div class="task-manager-container">
+    <div class="sidebar has-background-white">
+      <h1 class="title has-text-primary">
+        Lists
+      </h1>
+      <input name="filterList" type="text" [(ngModel)]="filterListString" (change)="filterList()"><span>Search list</span>
+      <div class="list-menu">
+        <div class="list-menu-item" *ngFor="let listItem of list;">
+          <a [routerLink]="['/list',listItem._id]" routerLinkActive="is-active">
+            <span> {{listItem.title}}</span>
+          </a>
 
-                    <button class="button is-small" (click)="updateList(listItem._id)" >U</button>
-        
-                    <button class="button is-danger is-small" style="margin-left: 10px;" (click)="deleteList(listItem._id)">
-                      D
-                    </button>
-        
-                  </div>
-                 
-                 
-                </div>
-            </div>
-             
-              <button class="button is-primary has-text-white" routerLink="/new-list" >+ New List</button>
-          </div>
-          
-          
-          
-          <div class="task-list-container has-background-light">
-              <h1 class="title has-text-primary">
-                  Tasks
-              </h1>
 
-              <div class="task" *ngFor="let task of task"  >
-                    <p>{{task.title}}</p>
-          
-                  
-                    <div class="btnfixtask">
-                      <button class="button is-small" (click)="updateTask(task._id)" >U</button>
-                      <button class="button is-danger is-small" style="margin-left: 10px;" (click)="deleteTask(task._id, task._listId)">
-                        D
-                      </button>
-                    </div>
-                  
-              </div>
-              <h3 class="empty-state-text" *ngIf="task.length === 0">There are no tasks here! Click the add button to create
-                a new task.</h3>
+        </div>
+      </div>
 
-              <button class="add-cirle-button button is-primary"  routerLink="./new-task">+</button>
-              <div *ngIf="!task">
-                <h3 class="empty-state-text">Please select a list from the sidebar</h3>
-              </div>
-            </div>
-          
+      <button class="button is-primary has-text-white" routerLink="/new-list">+ New List</button>
     </div>
-   
+
+
+
+    <div class="task-list-container has-background-light">
+      
+      <div *ngIf="task">
+        <div class="top-bar">
+          <h1 class="title has-text-primary">
+            Tasks
+          </h1>
+
+          <div class="dropdown">
+            <button class="dropbtn button is-primary has-text-white" >Settings</button>
+            <div class="dropdown-content" *ngFor="let listItem of list;">
+              <a [routerLink]="['/update-list',selectedListId]">update list</a>
+              <a (click)="deleteList(listItem._id)">Delete list</a>
+              <hr class="dropdown-divider">
+              <a (click)="onLogoutButtonClick()">Log out</a>
+            </div>
+          </div>
+
+
+        </div>
+     </div>
+      
+    
+
+
+      <div style="display: flex; justify-content: space-between;">
+        <span>Search task</span> <input name="filterTask" type="text" [(ngModel)]="filterTaskString" (change)="filterTaskGlobal()">
+        <select name="a" [(ngModel)]="filterStatus" (ngModelChange)="filterTaskGlobal()">
+          <option value="-1">All</option>
+          <option value="0">In Processing</option>
+          <option value="1">Completed</option>
+        </select>
+      </div>
+
+
+
+      <div class="task" [class]="task.completed ? 'task--completed':''" *ngFor="let task of task"
+        (dblclick)="complete(task)">
+        <p>{{task.title}}</p>
+        <div class="task-buttons">
+          <button class="button is-small" (click)="updateTask(task._id)" >U</button>
+          <button class="button is-danger is-small" style="margin-left: 10px;"
+            (click)="deleteTask(task._id, task._listId)"> D </button>
+        </div>
+      
+
+      </div>
+      <h3 class="empty-state-text" *ngIf="task.length === 0">There are no tasks here! Click the add button to create
+        a new task.</h3>
+
+      <button class="add-cirle-button button is-primary" routerLink="./new-task">+</button>
+      <div *ngIf="!task">
+        <h3 class="empty-state-text">Please select a list from the sidebar</h3>
+      </div>
+    </div>
+
+  </div>
+
 
 </div>

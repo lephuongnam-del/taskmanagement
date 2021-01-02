@@ -5,8 +5,10 @@
     max-width: 600px;
     border-radius: 30px;
     height: 600px;
-    margin-left: 300px;
-    margin-top: 16px;
+    margin: auto;
+    top: 50%;
+    position: relative;
+    transform: translateY(-50%);
   }
   .signup-heading {
     font-size: 40px;
