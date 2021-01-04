@@ -23,17 +23,17 @@
 
     <div class="task-list-container has-background-light">
       
-      <div *ngIf="task">
+      <div >
         <div class="top-bar">
           <h1 class="title has-text-primary">
             Tasks
           </h1>
-
+          <!-- *ngFor="let listItem of list;" -->
           <div class="dropdown">
             <button class="dropbtn button is-primary has-text-white" >Settings</button>
-            <div class="dropdown-content" *ngFor="let listItem of list;">
-              <a [routerLink]="['/update-list',selectedListId]">update list</a>
-              <a (click)="deleteList(listItem._id)">Delete list</a>
+            <div class="dropdown-content">
+              <a *ngIf="task" [routerLink]="['/update-list',selectedListId]">update list</a>
+              <a *ngIf="task" (click)="deleteList(selectedListId)">Delete list</a>
               <hr class="dropdown-divider">
               <a (click)="onLogoutButtonClick()">Log out</a>
             </div>
